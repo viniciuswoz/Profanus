@@ -22,22 +22,22 @@
             <!-- Filters -->
             <div class="row mb-3">
                 <div class="col-md-3">
-                    <select class="form-select" @bind="selectedState">
+                    <InputSelect class="form-select" @bind-Value="selectedState">
                         <option value="">All States</option>
                         @foreach (var state in devices.Select(d => d.OperationalState).Distinct())
                         {
                             <option value="@state">@state</option>
                         }
-                    </select>
+                    </InputSelect>
                 </div>
                 <div class="col-md-3">
-                    <select class="form-select" @bind="selectedVersion">
+                    <InputSelect class="form-select" @bind-Value="selectedVersion">
                         <option value="">All Versions</option>
                         @foreach (var version in devices.Select(d => d.Version).Distinct())
                         {
                             <option value="@version">@version</option>
                         }
-                    </select>
+                    </InputSelect>
                 </div>
             </div>
 
@@ -66,7 +66,7 @@
                         {
                             <tr>
                                 <td>
-                                    <input type="checkbox" @bind="deviceSelections[device.SerialNumber]" />
+                                    <input type="checkbox" checked="@deviceSelections[device.SerialNumber]" @onchange="e => deviceSelections[device.SerialNumber] = e.Value is bool v && v" />
                                 </td>
                                 <td>
                                     <span role="button" @onclick="() => ToggleFavorite(device.SerialNumber)">
