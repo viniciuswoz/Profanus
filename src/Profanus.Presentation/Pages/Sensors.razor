@@ -1,0 +1,31 @@
+@page "/sensors"
+@inject Profanus.Application.Services.SensorService SensorService
+
+<h3>Sensores</h3>
+
+@if (sensors == null)
+{
+    <p><em>Loading...</em></p>
+}
+else if (!sensors.Any())
+{
+    <p>Nenhum sensor cadastrado.</p>
+}
+else
+{
+    <ul>
+    @foreach (var s in sensors)
+    {
+        <li>@s.Name (@s.Status)</li>
+    }
+    </ul>
+}
+
+@code {
+    private IEnumerable<Profanus.Domain.Entities.Sensor>? sensors;
+
+    protected override async Task OnInitializedAsync()
+    {
+        sensors = await SensorService.GetSensorsAsync();
+    }
+}
