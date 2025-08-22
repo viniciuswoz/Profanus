@@ -17,6 +17,7 @@ builder.Services.AddDbContext<ProfanusDbContext>(options =>
 
 builder.Services.AddScoped<ISensorRepository, SensorRepository>();
 builder.Services.AddScoped<SensorService>();
+builder.Services.AddScoped<IDeviceService, DeviceService>();
 
 var app = builder.Build();
 

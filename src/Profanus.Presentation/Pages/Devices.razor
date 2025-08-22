@@ -1,0 +1,246 @@
+@page "/devices"
+@using Profanus.Application.Dtos
+@using System.Linq
+@inject Profanus.Application.Interfaces.IDeviceService DeviceService
+
+<div class="d-flex">
+    <!-- Sidebar rendered via MainLayout; left margin handled in layout -->
+    <div class="flex-grow-1">
+        <div class="container-fluid">
+            <h1 class="mt-3">Devices</h1>
+
+            <!-- Top navigation tabs -->
+            <ul class="nav nav-tabs mb-3">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Managed Elements</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Unmanaged Elements</a>
+                </li>
+            </ul>
+
+            <!-- Filters -->
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <select class="form-select" @bind="selectedState">
+                        <option value="">All States</option>
+                        @foreach (var state in devices.Select(d => d.OperationalState).Distinct())
+                        {
+                            <option value="@state">@state</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select" @bind="selectedVersion">
+                        <option value="">All Versions</option>
+                        @foreach (var version in devices.Select(d => d.Version).Distinct())
+                        {
+                            <option value="@version">@version</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <!-- Devices table -->
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>
+                                <input type="checkbox" @onclick="ToggleSelectAll" />
+                            </th>
+                            <th></th>
+                            <th role="button" @onclick="() => SortBy(nameof(DeviceDto.Name))">Name</th>
+                            <th role="button" @onclick="() => SortBy(nameof(DeviceDto.Label))">Label</th>
+                            <th role="button" @onclick="() => SortBy(nameof(DeviceDto.SerialNumber))">Serial number</th>
+                            <th role="button" @onclick="() => SortBy(nameof(DeviceDto.IP))">IP</th>
+                            <th role="button" @onclick="() => SortBy(nameof(DeviceDto.Version))">Version</th>
+                            <th role="button" @onclick="() => SortBy(nameof(DeviceDto.Model))">Model</th>
+                            <th role="button" @onclick="() => SortBy(nameof(DeviceDto.OperationalState))">Operational State</th>
+                            <th role="button" @onclick="() => SortBy(nameof(DeviceDto.ResyncState))">Resync State</th>
+                            <th role="button" @onclick="() => SortBy(nameof(DeviceDto.LastUpdate))">Last Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var device in PagedDevices)
+                        {
+                            <tr>
+                                <td>
+                                    <input type="checkbox" @bind="deviceSelections[device.SerialNumber]" />
+                                </td>
+                                <td>
+                                    <span role="button" @onclick="() => ToggleFavorite(device.SerialNumber)">
+                                        @if (favorites.Contains(device.SerialNumber))
+                                        {
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="bi bi-star"></i>
+                                        }
+                                    </span>
+                                </td>
+                                <td>@device.Name</td>
+                                <td>@device.Label</td>
+                                <td>@device.SerialNumber</td>
+                                <td><a href="http://@device.IP" target="_blank">@device.IP</a></td>
+                                <td>@device.Version</td>
+                                <td>@device.Model</td>
+                                <td>@device.OperationalState</td>
+                                <td>@device.ResyncState</td>
+                                <td>@device.LastUpdate.ToString("g")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item @(CurrentPage == 1 ? "disabled" : string.Empty)">
+                        <a class="page-link" href="#" @onclick="() => ChangePage(CurrentPage - 1)">Previous</a>
+                    </li>
+                    @for (int i = 1; i <= TotalPages; i++)
+                    {
+                        <li class="page-item @(i == CurrentPage ? "active" : string.Empty)">
+                            <a class="page-link" href="#" @onclick="() => ChangePage(i)">@i</a>
+                        </li>
+                    }
+                    <li class="page-item @(CurrentPage == TotalPages ? "disabled" : string.Empty)">
+                        <a class="page-link" href="#" @onclick="() => ChangePage(CurrentPage + 1)">Next</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Footer stats -->
+            <footer class="mt-4">
+                <div class="row">
+                    <div class="col">
+                        <strong>Status:</strong>
+                        @foreach (var kv in StatusCounts)
+                        {
+                            <span class="me-2">@kv.Key: @kv.Value</span>
+                        }
+                    </div>
+                    <div class="col">
+                        <strong>Versions:</strong>
+                        @foreach (var kv in VersionCounts)
+                        {
+                            <span class="me-2">@kv.Key: @kv.Value</span>
+                        }
+                    </div>
+                    <div class="col">
+                        <strong>Models:</strong>
+                        @foreach (var kv in ModelCounts)
+                        {
+                            <span class="me-2">@kv.Key: @kv.Value</span>
+                        }
+                    </div>
+                    <div class="col">
+                        <strong>Last Update:</strong> @LatestUpdate.ToString("g")
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+</div>
+
+@code {
+    private IEnumerable<DeviceDto> devices = new List<DeviceDto>();
+    private string selectedState = string.Empty;
+    private string selectedVersion = string.Empty;
+    private readonly Dictionary<string, bool> deviceSelections = new();
+    private readonly HashSet<string> favorites = new();
+    private const int PageSize = 100;
+    private int CurrentPage = 1;
+    private string sortColumn = nameof(DeviceDto.Name);
+    private bool sortAscending = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Load device data from backend service
+        devices = await DeviceService.GetDevicesAsync(); // TODO: replace with real backend call
+        foreach (var d in devices)
+        {
+            deviceSelections[d.SerialNumber] = false;
+        }
+    }
+
+    private IEnumerable<DeviceDto> FilteredDevices => devices
+        .Where(d => string.IsNullOrEmpty(selectedState) || d.OperationalState == selectedState)
+        .Where(d => string.IsNullOrEmpty(selectedVersion) || d.Version == selectedVersion);
+
+    private IEnumerable<DeviceDto> SortedDevices => sortColumn switch
+    {
+        nameof(DeviceDto.Label) => Sort(FilteredDevices, d => d.Label),
+        nameof(DeviceDto.SerialNumber) => Sort(FilteredDevices, d => d.SerialNumber),
+        nameof(DeviceDto.IP) => Sort(FilteredDevices, d => d.IP),
+        nameof(DeviceDto.Version) => Sort(FilteredDevices, d => d.Version),
+        nameof(DeviceDto.Model) => Sort(FilteredDevices, d => d.Model),
+        nameof(DeviceDto.OperationalState) => Sort(FilteredDevices, d => d.OperationalState),
+        nameof(DeviceDto.ResyncState) => Sort(FilteredDevices, d => d.ResyncState),
+        nameof(DeviceDto.LastUpdate) => Sort(FilteredDevices, d => d.LastUpdate),
+        _ => Sort(FilteredDevices, d => d.Name)
+    };
+
+    private IEnumerable<DeviceDto> Sort<TKey>(IEnumerable<DeviceDto> src, Func<DeviceDto, TKey> keySelector)
+        => sortAscending ? src.OrderBy(keySelector) : src.OrderByDescending(keySelector);
+
+    private IEnumerable<DeviceDto> PagedDevices => SortedDevices
+        .Skip((CurrentPage - 1) * PageSize)
+        .Take(PageSize);
+
+    private int TotalPages => Math.Max(1, (int)Math.Ceiling(SortedDevices.Count() / (double)PageSize));
+
+    private void ChangePage(int page)
+    {
+        if (page < 1 || page > TotalPages) return;
+        CurrentPage = page;
+    }
+
+    private void SortBy(string column)
+    {
+        if (sortColumn == column)
+        {
+            sortAscending = !sortAscending;
+        }
+        else
+        {
+            sortColumn = column;
+            sortAscending = true;
+        }
+    }
+
+    private void ToggleFavorite(string serial)
+    {
+        if (!favorites.Add(serial))
+        {
+            favorites.Remove(serial);
+        }
+    }
+
+    private void ToggleSelectAll()
+    {
+        bool allSelected = deviceSelections.Values.All(v => v);
+        var keys = deviceSelections.Keys.ToList();
+        foreach (var key in keys)
+        {
+            deviceSelections[key] = !allSelected;
+        }
+    }
+
+    private Dictionary<string, int> StatusCounts => devices
+        .GroupBy(d => d.OperationalState)
+        .ToDictionary(g => g.Key, g => g.Count());
+
+    private Dictionary<string, int> VersionCounts => devices
+        .GroupBy(d => d.Version)
+        .ToDictionary(g => g.Key, g => g.Count());
+
+    private Dictionary<string, int> ModelCounts => devices
+        .GroupBy(d => d.Model)
+        .ToDictionary(g => g.Key, g => g.Count());
+
+    private DateTime LatestUpdate => devices.Any() ? devices.Max(d => d.LastUpdate) : DateTime.MinValue;
+}
