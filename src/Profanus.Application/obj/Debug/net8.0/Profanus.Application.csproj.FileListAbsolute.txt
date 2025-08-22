@@ -1,0 +1,16 @@
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Application\bin\Debug\net8.0\Profanus.Application.deps.json
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Application\bin\Debug\net8.0\Profanus.Application.dll
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Application\bin\Debug\net8.0\Profanus.Application.pdb
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Application\bin\Debug\net8.0\Profanus.Domain.dll
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Application\bin\Debug\net8.0\Profanus.Domain.pdb
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Application\obj\Debug\net8.0\Profanus.Application.csproj.AssemblyReference.cache
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Application\obj\Debug\net8.0\Profanus.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Application\obj\Debug\net8.0\Profanus.Application.AssemblyInfoInputs.cache
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Application\obj\Debug\net8.0\Profanus.Application.AssemblyInfo.cs
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Application\obj\Debug\net8.0\Profanus.Application.csproj.CoreCompileInputs.cache
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Application\obj\Debug\net8.0\Profanus.Application.sourcelink.json
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Application\obj\Debug\net8.0\Profanus.61B042A7.Up2Date
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Application\obj\Debug\net8.0\Profanus.Application.dll
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Application\obj\Debug\net8.0\refint\Profanus.Application.dll
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Application\obj\Debug\net8.0\Profanus.Application.pdb
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Application\obj\Debug\net8.0\ref\Profanus.Application.dll

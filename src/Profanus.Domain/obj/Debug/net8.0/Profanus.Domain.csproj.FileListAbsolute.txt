@@ -1,0 +1,12 @@
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Domain\bin\Debug\net8.0\Profanus.Domain.deps.json
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Domain\bin\Debug\net8.0\Profanus.Domain.dll
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Domain\bin\Debug\net8.0\Profanus.Domain.pdb
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Domain\obj\Debug\net8.0\Profanus.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Domain\obj\Debug\net8.0\Profanus.Domain.AssemblyInfoInputs.cache
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Domain\obj\Debug\net8.0\Profanus.Domain.AssemblyInfo.cs
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Domain\obj\Debug\net8.0\Profanus.Domain.csproj.CoreCompileInputs.cache
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Domain\obj\Debug\net8.0\Profanus.Domain.sourcelink.json
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Domain\obj\Debug\net8.0\Profanus.Domain.dll
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Domain\obj\Debug\net8.0\refint\Profanus.Domain.dll
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Domain\obj\Debug\net8.0\Profanus.Domain.pdb
+C:\Users\marcelo.vsilva\Documents\GitHub\Profanus\src\Profanus.Domain\obj\Debug\net8.0\ref\Profanus.Domain.dll
