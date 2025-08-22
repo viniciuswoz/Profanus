@@ -1,0 +1,58 @@
+## Compilação / Build ##
+bin/
+obj/
+out/
+*.exe
+*.dll
+*.pdb
+*.cache
+*.log
+
+## Usuário / Config local do VS ##
+.vs/
+*.user
+*.suo
+*.userosscache
+*.userprefs
+
+## IDEs ##
+.idea/
+.vscode/
+*.swp
+
+## Pacotes ##
+*.nupkg
+*.snupkg
+*.nuspec
+*.psmdcp
+packages/
+*.lock.json
+
+## ASP.NET / Blazor ##
+wwwroot/dist/
+wwwroot/node_modules/
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+## Configuração / Ambiente ##
+appsettings.Development.json
+appsettings.Local.json
+
+## Cache ##
+_ReSharper*/
+*.resharper
+*.DotSettings.user
+*.ncrunch*
+*.localhistory
+*.sln.docstates
+
+## Sistema ##
+Thumbs.db
+*.DS_Store
+*.tmp
+*.bak
+*.backup
+*.log
